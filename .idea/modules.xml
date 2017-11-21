@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LanchoneteDelicia.iml" filepath="$PROJECT_DIR$/LanchoneteDelicia.iml" />
+      <module fileurl="file://C:\Users\Pichau\AndroidStudioProjects\lanchoneteDelicia\LanchoneteDelicia.iml" filepath="C:\Users\Pichau\AndroidStudioProjects\lanchoneteDelicia\LanchoneteDelicia.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Pichau\AndroidStudioProjects\lanchoneteDelicia\app\app.iml" filepath="C:\Users\Pichau\AndroidStudioProjects\lanchoneteDelicia\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lanchoneteDelicia.iml" filepath="$PROJECT_DIR$/lanchoneteDelicia.iml" />
     </modules>
   </component>
 </project>
