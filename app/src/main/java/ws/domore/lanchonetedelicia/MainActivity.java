@@ -1,16 +1,21 @@
 package ws.domore.lanchonetedelicia;
 
+import com.loopj.android.http. *;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,55 +24,66 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView textView = (TextView) this.findViewById(R.id.text_view_title);
+        TextView textView = (TextView)this.findViewById(R.id.text_view_title);
         textView.setText(R.string.products_title);
 
-        ArrayList<Item> produto_list = new ArrayList<Item>();
+        final ArrayList<String> produtoList = new ArrayList<String>();
 
-        produto_list.add(new Item("Suco Onda Tropical", "R$10,00", "Um Suco composto de frutas tropicais batido na hora", "SUCOONDATROPICAL"));
-        produto_list.add(new Item("Vitamina Planetaria", "R$25,00", "Vitamina que une a maior parte banana, whey protein e um pouco de mamao para dar um gosto diferencial", "VITAMINAPLANETARIA"));
-        produto_list.add(new Item("Hamburguer Exagerado", "R$30,00", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar sem. Etiam aliquet ipsum eu arcu vestibulum, eget porta mi mattis. Suspendisse porttitor dignissim sollicitudin. Mauris facilisis, diam ac volutpat ultricies, nisl massa varius lacus, ac scelerisque nisi tortor in leo.", "HAMBURGUEREXAGERADO"));
-        //criar categoria e mudar img
-        produto_list.add(new Item("Pastel Super","R$12,00","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar sem. Etiam aliquet ipsum eu arcu vestibulum, eget porta mi mattis. Suspendisse porttitor dignissim sollicitudin. Mauris facilisis, diam ac volutpat ultricies, nisl massa varius lacus, ac scelerisque nisi tortor in leo.","PASTELSUPER"));
-        produto_list.add(new Item("Empada Olho Grande","R$15,00","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar sem. Etiam aliquet ipsum eu arcu vestibulum, eget porta mi mattis. Suspendisse porttitor dignissim sollicitudin. Mauris facilisis, diam ac volutpat ultricies, nisl massa varius lacus, ac scelerisque nisi tortor in leo.","EMPADAOLHOGRANDE"));
-        produto_list.add(new Item("Boliviado Quente","R$22,00","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar sem. Etiam aliquet ipsum eu arcu vestibulum, eget porta mi mattis. Suspendisse porttitor dignissim sollicitudin. Mauris facilisis, diam ac volutpat ultricies, nisl massa varius lacus, ac scelerisque nisi tortor in leo.","BOLIVIADOQUENTE"));
-        produto_list.add(new Item("Quibe POP","R$5,00","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar sem. Etiam aliquet ipsum eu arcu vestibulum, eget porta mi mattis. Suspendisse porttitor dignissim sollicitudin. Mauris facilisis, diam ac volutpat ultricies, nisl massa varius lacus, ac scelerisque nisi tortor in leo.","QUIBEPOP"));
-        produto_list.add(new Item("Esfirra do Sabor", "R$7,00", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar sem. Etiam aliquet ipsum eu arcu vestibulum, eget porta mi mattis. Suspendisse porttitor dignissim sollicitudin. Mauris facilisis, diam ac volutpat ultricies, nisl massa varius lacus, ac scelerisque nisi tortor in leo.", "ESFIRRADOSABOR"));
-        produto_list.add(new Item("Crepioca Saborosa", "R$19,00", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar sem. Etiam aliquet ipsum eu arcu vestibulum, eget porta mi mattis. Suspendisse porttitor dignissim sollicitudin. Mauris facilisis, diam ac volutpat ultricies, nisl massa varius lacus, ac scelerisque nisi tortor in leo.", "CREPIOCASABOROSA"));
-        produto_list.add(new Item("Pao de Nuvem", "R$10,50", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar sem. Etiam aliquet ipsum eu arcu vestibulum, eget porta mi mattis. Suspendisse porttitor dignissim sollicitudin. Mauris facilisis, diam ac volutpat ultricies, nisl massa varius lacus, ac scelerisque nisi tortor in leo.", "PAODENUVEM"));
-        produto_list.add(new Item("Bruschetta Integral", "R$30,00", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar sem. Etiam aliquet ipsum eu arcu vestibulum, eget porta mi mattis. Suspendisse porttitor dignissim sollicitudin. Mauris facilisis, diam ac volutpat ultricies, nisl massa varius lacus, ac scelerisque nisi tortor in leo.", "BRUSCHETTAINTEGRAL"));
+        produtoList.add("Suco Onda Tropical");
+        produtoList.add("Vitamina Planetaria");
+        produtoList.add("Hamburguer Exagerado");
+        produtoList.add("Pastel Super");
+        produtoList.add("Empada Olho Grande");
+        produtoList.add("Boliviano Quente");
+        produtoList.add("Quibe POP");
+        produtoList.add("Esfirra do Sabor");
+        produtoList.add("Crepioca Saborosa");
+        produtoList.add("Pao de Nuvem");
+        produtoList.add("Bruschetta Integral");
+        produtoList.add("Banana chips");
+        produtoList.add("Sopa Funcional");
+        produtoList.add("Sanduiche Natureba");
+        produtoList.add("Salada  Surpresa");
 
-        //        produto_list.add("Pastel Super");
-//        produto_list.add("Empada Olho Grande");
-//        produto_list.add("Boliviado Quente");
-//        produto_list.add("Quibe POP");
-//        produto_list.add("Esfirra do Sabor");
-//        produto_list.add("Crepioca Saborosa");
-//        produto_list.add("Pao de Nuvem");
-//        produto_list.add("Bruschetta Integral");
-//        produto_list.add("Banana chips");
-//        produto_list.add("Sopa Funcional");
-//        produto_list.add("Sanduche Natureba");
-//        produto_list.add("Salada  Surpresa");
-
-        ArrayAdapter<Item> adapter = new ArrayAdapter<Item>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this,
                 R.layout.list_item_produto,
                 R.id.text_view_produto,
-                produto_list
+                produtoList
         );
 
-        ListView listView = (ListView) this.findViewById(R.id.list_view_produtos);
+        ListView listView = (ListView)this.findViewById(R.id.list_view_produtos);
 
         listView.setAdapter(adapter);
 
+        Context context = this;
+        String text = "Olá Toast!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(MainActivity.this, ActivityVisualizarItens.class);
-                intent.putExtra("Item", (Serializable) adapterView.getItemAtPosition(position));
-                startActivity(intent);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent detalheActivity = new Intent(MainActivity.this,DetalheActivity.class);
+                detalheActivity.putExtra("produto_nome",produtoList.get(i));
+                startActivity(detalheActivity);
             }
         });
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("https://patra-backend.appspot.com/produtos",
+                new TextHttpResponseHandler() {
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        Log.d("AsyncHttpClient", "onFailure response = " + responseString);
+                        Log.d("AsyncHttpClient",throwable.toString());
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                            Log.d("AsyncHttpClient", "onSuccess response = " + responseString);
+                        }
+                });
+
     }
 }
